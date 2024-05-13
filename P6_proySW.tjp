@@ -416,13 +416,15 @@ resourcereport resourceGraph "" {
 }
 
 # A report that shows the initial project plan.
-resourcereport initialPlan "" {
+taskreport initialPlan "" {
   scenarios plan
   headline "Initial Project Plan"
-  columns bsi { title 'WBS' }, name, start, end, effort, cost,
+  columns bsi { title 'WBS' },
+          name, start, end, effort, cost,
           revenue, chart { ${TaskTip} }
-  timeformat "%Y-%m-%d"
+  timeformat "%a %Y-%m-%d"
   loadunit days
   hideresource @all
   balance cost rev
+  caption 'All effort values are in man days.'
 }
