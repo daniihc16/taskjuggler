@@ -5,7 +5,7 @@
  * some elements of it
  */
 
-project pSix "Web Game"  2023-03-15 +2.5m {
+project pSix "Web Game"  2024-03-15 +5m {
   # Set the default time zone for the project. If not specified, UTC
   # is used.
   timezone "Europe/Paris"
@@ -19,7 +19,7 @@ project pSix "Web Game"  2023-03-15 +2.5m {
   # the project reports. If not specified, the current day will be
   # used, but this will likely be outside of the project range, so it
   # can't be seen in the reports.
-  now 2023-04-15-13:00
+  now 2024-05-13
   # The currency for all money values is the US Dollar.
   currency "EUR"
 
@@ -66,6 +66,12 @@ resource dev2 "Samantha Müller" {
 }
 resource dev3 "Peter Green" {
   email "kkk@unizar.es"
+}
+
+resource dev4 "Daniel Herce Cruz" {
+  email "848884@unizar.es"
+  rate 100
+  availability 4h perday
 }
 
 # Now we specify the work packages. The whole project is described as
@@ -143,10 +149,21 @@ task WMGame "Web & Mobile Game" {
       effort 6d
       allocate dev1
       depends WMGame.twebF.tFEc
+    }
+    task tFEc "Web Front End Construction" {
+      effort 15d
+      allocate dev2, dev3
+      depends WMGame.twebF.tGUId
+      journalentry 2023-04-20 "Incidencia de hoy" {
+        author dev2
+        alert yellow
+        summary "Hoy tuvimos un problema con la integración de la API. Estamos trabajando para resolverlo."
+      }
     }    
   }
 
   task ttest "Accpetance tests" {
+      start 2024-06-01
       effort 10d
       allocate boss
       allocate dev2
@@ -355,4 +372,17 @@ resourcereport resourceGraph "" {
   # We only like to show leaf tasks for leaf resources.
   hidetask ~(isleaf() & isleaf_())
   sorttasks plan.start.up
+}
+
+# A report that shows the initial project plan.
+taskreport initialPlan "" {
+  scenarios plan
+  headline "Initial Project Plan"
+  columns bsi { title 'WBS' }, name, start, end, effort, cost,
+          revenue, chart { ${TaskTip} }
+  timeformat "%Y-%m-%d"
+  loadunit days
+  hideresource @all
+  balance cost rev
+  caption 'All effort'
 }
