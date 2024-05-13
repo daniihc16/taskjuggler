@@ -189,11 +189,11 @@ task WMGame "Web & Mobile Game" {
     task tcloudEval "Cloud Evaluation" {
       effort 3d
       actual:effort 5d
-      allocate dev4
+      allocate dev3
     }
     task tcloudDep "Cloud Deployment" {
       effort 2d
-      allocate dev4
+      allocate dev3
       depends WMGame.tcloud.tcloudEval
     }
   }
